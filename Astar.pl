@@ -1,10 +1,10 @@
 % stato rappresentato da nodo(S, ListaAzioniPerS, costoCamminoAttuale, costoEuristica)
 
-:- ['../labirinto/loader.pl', 'utils.pl'].
+:- ['./labyrinth/loader.pl', 'utils.pl'].
 
 aStar(Soluzione) :-
   iniziale(S),
-  hRicercaID(S, _, L),
+  euristica(S, _, L),
   star([nodo(S, [], 0, L)], [], Soluzione),
   write("\nSoluzione trovata!\n"),
   write(Soluzione).

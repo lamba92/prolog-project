@@ -1,6 +1,6 @@
 % stato rappresentato da nodo(S, ListaAzioniPerS, costoCamminoAttuale, costoEuristica, depth)
 
-:- ['../labirinto/loader.pl', 'utils.pl'].
+:- ['./labyrinth/loader.pl', 'utils.pl'].
 
 i(S) :- idaStar(S).
 

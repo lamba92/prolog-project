@@ -1,3 +1,5 @@
+:- dynamic trasforma/3, finale/1, num_col/1, num_righe/1, maxDepth/1.
+
 hApplicabile(nord, pos(R,_)) :-
   R>1.
 

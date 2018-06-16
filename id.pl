@@ -1,4 +1,4 @@
-:- ['../labirinto/loader.pl'].
+:- ['./labyrinth/loader.pl'].
 
 ricercaID2(Sol) :-
   maxDepth(D),
