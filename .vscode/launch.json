@@ -4,17 +4,17 @@
     // Per ulteriori informazioni, visitare: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
+    
         {
             "name": "Debug Prolog Files",
             "type": "prolog",
             "request": "launch",
-            "runtimeExecutable": "C:\\Users\\lamba\\OneDrive\\Developing\\swipl\\bin",
+            "runtimeExecutable": "C:\\Users\\lamba\\OneDrive\\Developing\\swipl\\bin\\swipl.exe",
             "runtimeArgs": [],
             "env": {},
             "program": "${file}",
             "cwd": "${fileDirname}",
-            "startupQuery": "start",
+            "startupQuery": "debug",
             "stopOnEntry": true,
             "traceCmds": {
                 "continue": [

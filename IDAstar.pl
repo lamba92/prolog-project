@@ -2,7 +2,9 @@
 
 :- ['./labyrinth/loader.pl', 'utils.pl'].
 
-i(S) :- idaStar(S).
+debug:- 
+  idaStar(S),
+  write(S).
   
 idaStar(Soluzione) :-
   iniziale(S),
