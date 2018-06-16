@@ -1,3 +1,5 @@
+:- dynamic trasforma/3, applicabile/2, finale/1, iniziale/1.
+
 ricercaProfondita(Sol) :-
   iniziale(S),
   ric_prof(S, Sol, [S]),

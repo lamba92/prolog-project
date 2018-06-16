@@ -1,6 +1,6 @@
 % stato rappresentato da nodo(S, ListaAzioniPerS, costoCamminoAttuale, costoEuristica)
 
-:- ['./labyrinth/loader.pl', 'utils.pl'].
+:- ['./tile_game/loader.pl', 'utils.pl'].
 
 aStar(Soluzione) :-
   iniziale(S),

@@ -1,3 +1,5 @@
+:- dynamic num_col/1, num_righe/1, occupata/1.
+
 applicabile(nord, pos(R,C)) :-
   R>1,
   R1 is R-1,

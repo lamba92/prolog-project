@@ -3,7 +3,7 @@
 :- ['./labyrinth/loader.pl', 'utils.pl'].
 
 i(S) :- idaStar(S).
-
+  
 idaStar(Soluzione) :-
   iniziale(S),
   euristica(S, _, E),

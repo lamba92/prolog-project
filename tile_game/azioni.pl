@@ -1,3 +1,5 @@
+:- dynamic n_factorial/2, setElement/4, dim/1.
+
 applicabile(nord, Stato) :-
   dim(D),
   nth0(P_, Stato, v),

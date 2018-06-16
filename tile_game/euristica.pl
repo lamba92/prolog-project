@@ -1,3 +1,5 @@
+:- dynamic dim/1.
+
 euristica(Stato, Sol, E) :-
   ricorri(Stato, Stato, 0, 0, E),
   length(Sol, 0).
