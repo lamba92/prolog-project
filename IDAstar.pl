@@ -1,8 +1,8 @@
 % stato rappresentato da nodo(S, ListaAzioniPerS, costoCamminoAttuale, costoEuristica, depth)
 
-:- ['./labyrinth/loader.pl', 'utils.pl'].
+:- ['./tile_game/loader.pl', 'utils.pl'].
 
-debug:- 
+start:- 
   idaStar(S),
   write(S).
   

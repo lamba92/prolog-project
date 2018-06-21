@@ -45,8 +45,9 @@ trasforma(sud, S, SNuovo) :-
 
 maxDepth(Md) :-
   dim(D),
-  n_factorial(D, F),
-  Md is F / 2.
+  Md is D*100.
+  %n_factorial(D, F),
+  %Md is F / 2.
 
 costoPasso(_, _, Costo) :-
   Costo is 1.
