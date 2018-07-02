@@ -4,4 +4,7 @@ This project has been written for the exam of Artificial Intelligence Laboratory
 This consist of an impementation of A* and IDA* in Prolog in two domains, a labyrinth and tile game.
 
 ## Author
- - [**Lamba92**](https://github.com/lamba92)
+
+* **Cesare Iurlaro** - [CesareIurlaro](https://github.com/CesareIurlaro)
+* **Giuseppe Gabbia**  - [beppe95](https://github.com/beppe95)
+* **Lamberto Basti**  - [lamba92](https://github.com/lamba92)
