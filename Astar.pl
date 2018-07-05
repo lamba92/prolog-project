@@ -1,6 +1,6 @@
 % stato rappresentato da nodo(S, ListaAzioniPerS, costoCamminoAttuale, costoEuristica)
 
-:- ['./tile_game/loader.pl', 'utils.pl'].
+:- ['./labyrinth/loader.pl', 'utils.pl'].
 
 aStar(Soluzione) :-
   iniziale(S),
@@ -41,7 +41,9 @@ generateSons(nodo(S, ListaAzioniPerS, CostoCamminoS, CostoEuristicaS),
   euristica(SNuovo, SolE, CostoEuristicaSNuovo),
   write("\n"), write(SolE), write(" | "), write(CostoEuristicaSNuovo),
   append(ListaAzioniPerS, [Azione], ListaAzioniPerSNuovo),
-  generateSons(nodo(S, ListaAzioniPerS, CostoCamminoS, CostoEuristicaS), AltreAzioni, NodiEspansi, AltriFigli).
+  generateSons(nodo(S, ListaAzioniPerS, CostoCamminoS, CostoEuristicaS), AltreAzioni, NodiEspansi, AltriFigli),
+  !.
 % serve per backtrackare sulle altre azione se l'Azione porta ad uno stato già visitato o che fallisce
 generateSons(Nodo, [_|AltreAzioni], ListaStatiVisitati, ListaNodiFigli) :-
-  generateSons(Nodo, AltreAzioni, ListaStatiVisitati, ListaNodiFigli).
+  generateSons(Nodo, AltreAzioni, ListaStatiVisitati, ListaNodiFigli),
+  !.

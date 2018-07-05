@@ -40,13 +40,18 @@ appendOrdinata([_|AltriFigli], Frontiera, NuovaFrontiera) :-
 % false
 checkDuplicate(_, [], []).
 checkDuplicate(nodo(N, _, C, _, _),
-               [nodo(N1, _, C1, _, _)|AltriNodi],
+               [nodo(N, _, C1, _, _)|AltriNodi],
                AltriNodi) :-
-  N == N1,
+  C =< C1,
+  !.
+checkDuplicate(nodo(N, _, C, _),
+               [nodo(N, _, C1, _)|AltriNodi],
+               AltriNodi) :-
   C =< C1,
   !.
 checkDuplicate(A, [N|Rest], [N|Rest0]) :-
-  checkDuplicate(A, Rest, Rest0).
+  checkDuplicate(A, Rest, Rest0),
+  !.
 
 % insert(Nodo, Frontiera, NuovaFrontiera)
 %         in      in           out

@@ -53,8 +53,8 @@ generateSons(nodo(S, ListaAzioniPerS, CostoCamminoS, CostoEuristicaS, Profondita
   CostoCamminoSNuovo is CostoCamminoS + CostoPasso,
   write("\nCalcolo euristica per "), write(Azione),
   euristica(SNuovo, SolE, CostoEuristicaSNuovo),
-  append(ListaAzioniPerS, [Azione], ListaAzioniPerSNuovo),
   write("\n"), write(SolE), write(" | "), write(CostoEuristicaSNuovo),
+  append(ListaAzioniPerS, [Azione], ListaAzioniPerSNuovo),
   generateSons(nodo(S, ListaAzioniPerS, CostoCamminoS, CostoEuristicaS, ProfonditaS), AltreAzioni, NodiEspansi, MaxDepth, AltriFigli),
   !.
 % serve per backtrackare sulle altre azione se l'Azione porta ad uno stato già visitato o che fallisce
