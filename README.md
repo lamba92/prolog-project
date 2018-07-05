@@ -37,7 +37,7 @@ File structure:
   <img src="https://raw.githubusercontent.com/lamba92/prolog-project/master/stuff/labyrinth.png"/>
 </p>
 
-This domain represent a labyrinth using the predicate `pos(X, Y)` where `X` and `Y` are the agent positioncoordinates. Simirarly the blue walls are represented by `occupata(pos(X, Y))`. `applicabile()` just checks if the action doesn't lead outside the labyrinth or inside a blue block, while `trasforma()` generate the new state as expected.
+This domain represent a labyrinth using the predicate `pos(X, Y)` where `X` and `Y` are the agent position coordinates. Simirarly the blue walls are represented by `occupata(pos(X, Y))`. `applicabile()` just checks if the action doesn't lead outside the labyrinth or inside a blue block, while `trasforma()` generate the new state as expected.
 
 The heuristic used here is the manhattan distance that ignores the blue squares. The search is handled by `h_ric_prof_lim()` which implements an iterative deepening search.
 
