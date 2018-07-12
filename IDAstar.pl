@@ -22,7 +22,7 @@ idaStar(Solution) :-
 % star(CodaNodiDaEsplorare, ExpandedNodes, MaxDepth, Solution)
 %          input               input       input     output
 ida([node(S, ActionsListForS, _, _, _)|_], _, _, ActionsListForS) :-
-  finale(S).
+  finalPosition(S).
 ida([node(S, ActionsListForS, ActualPathCost, HeuristicCost, DepthOfS)|Frontier], ExpandedNodes, MaxDepth, Solution) :-
   write("\nNodo in analisi: "), write(S),
   write("\nLista azioni: "), write(ActionsListForS),

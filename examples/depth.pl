@@ -1,4 +1,4 @@
-:- dynamic move/3, allowed/2, finale/1, initialPosition/1.
+:- dynamic move/3, allowed/2, finalPosition/1, initialPosition/1.
 
 ricercaProfondita(Sol) :-
   initialPosition(S),
@@ -11,14 +11,14 @@ ricercaProfLim(N, Sol) :-
   write("\n"),
   write(Sol).
 
-ric_prof(S, _, _) :- finale(S), !.
+ric_prof(S, _, _) :- finalPosition(S), !.
 ric_prof(S, [Action|ListaAzioni], Visitati) :-
   allowed(Action, S),
   move(Action, S, NewS),
   \+member(NewS, Visitati),
   ric_prof(NewS, ListaAzioni, [NewS|Visitati]).
 
-ric_prof_lim(S, [], _, _) :- finale(S).
+ric_prof_lim(S, [], _, _) :- finalPosition(S).
 ric_prof_lim(S, [Action|ListaAzioni], Visitati, N) :-
   N>0,
   allowed(Action, S),

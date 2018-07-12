@@ -11,7 +11,7 @@ aStar(Solution) :-
 
 % star(CodaNodiDaEsplorare, ExpandedNodes, Solution)
 star([node(S, ActionsListForS, _, _)|_], _, ActionsListForS) :-
-  finale(S).
+  finalPosition(S).
 star([node(S, ActionsListForS, ActualPathCost, HeuristicCost)|Frontier], ExpandedNodes, Solution) :-
   write("\nNodo in analisi: "), write(S),
   write("\nLista azioni: "), write(ActionsListForS),

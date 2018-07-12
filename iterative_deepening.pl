@@ -14,7 +14,7 @@ ricercaID(Sol) :-
   write("\n"),
   write(Sol).
 
-ric_prof_lim(S, [], _, _) :- finale(S).
+ric_prof_lim(S, [], _, _) :- finalPosition(S).
 ric_prof_lim(S, [Action|ListaAzioni], Visitati, N) :-
   N>0,
   allowed(Action, S),

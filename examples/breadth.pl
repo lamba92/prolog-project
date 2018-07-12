@@ -1,4 +1,4 @@
-:- dynamic move/3, allowed/2, finale/1, initialPosition/1.
+:- dynamic move/3, allowed/2, finalPosition/1, initialPosition/1.
 
 % stato rappresentato da node(S, ActionsListForS)
 
@@ -8,7 +8,7 @@ ampiezza(Solution) :-
 
 % depth(CodaNodiDaEsplorare, ExpandedNodes, Solution)
 breadth([node(S, ActionsListForS)|_], _, ActionsListForS) :-
-  finale(S).
+  finalPosition(S).
 
 breadth([node(S, ActionsListForS)|Frontier], ExpandedNodes, Solution) :-
   findall(Az, allowed(Az, S), AllowedActionsList),
