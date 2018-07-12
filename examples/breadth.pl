@@ -1,37 +1,37 @@
-:- dynamic trasforma/3, applicabile/2, finale/1, iniziale/1.
+:- dynamic move/3, allowed/2, finale/1, initialPosition/1.
 
-% stato rappresentato da nodo(S, ListaAzioniPerS)
+% stato rappresentato da node(S, ActionsListForS)
 
-ampiezza(Soluzione) :-
-  iniziale(S),
-  breadth([nodo(S, [])], [], Soluzione).
+ampiezza(Solution) :-
+  initialPosition(S),
+  breadth([node(S, [])], [], Solution).
 
-% depth(CodaNodiDaEsplorare, NodiEspansi, Soluzione)
-breadth([nodo(S, ListaAzioniPerS)|_], _, ListaAzioniPerS) :-
+% depth(CodaNodiDaEsplorare, ExpandedNodes, Solution)
+breadth([node(S, ActionsListForS)|_], _, ActionsListForS) :-
   finale(S).
 
-breadth([nodo(S, ListaAzioniPerS)|Frontiera], NodiEspansi, Soluzione) :-
-  findall(Az, applicabile(Az, S), ListaAzioniApplicabili),
-  visitati([nodo(S, ListaAzioniPerS)|Frontiera], NodiEspansi, ListaStatiVisitati),
-  generateSons(nodo(S,ListaAzioniPerS), ListaAzioniApplicabili, ListaStatiVisitati, ListaFigliS),
-  append(Frontiera, ListaFigliS, NuovaFrontiera),
-  breadth(NuovaFrontiera, [S|NodiEspansi], Soluzione).
+breadth([node(S, ActionsListForS)|Frontier], ExpandedNodes, Solution) :-
+  findall(Az, allowed(Az, S), AllowedActionsList),
+  visitati([node(S, ActionsListForS)|Frontier], ExpandedNodes, ExpandedNodes),
+  generateSons(node(S,ActionsListForS), AllowedActionsList, ExpandedNodes, SChilderenList),
+  append(Frontier, SChilderenList, NewFrontier),
+  breadth(NewFrontier, [S|ExpandedNodes], Solution).
 
-% visitati(Frontiera, NodiEspansi, ListaStatiVisitati)
-visitati(Frontiera, NodiEspansi, ListaStatiVisitati) :-
-  estraiStato(Frontiera, StatiFrontiera),
-  append(StatiFrontiera, NodiEspansi, ListaStatiVisitati).
+% visitati(Frontier, ExpandedNodes, ExpandedNodes)
+visitati(Frontier, ExpandedNodes, ExpandedNodes) :-
+  estraiStato(Frontier, StatiFrontiera),
+  append(StatiFrontiera, ExpandedNodes, ExpandedNodes).
 
-% estraiStato(Frontiera, ListaDiStati)
+% estraiStato(Frontier, ListaDiStati)
 estraiStato([], []).
-estraiStato([nodo(S,_)|Frontiera], [S|StatiFrontiera]) :-
-  estraiStato(Frontiera, StatiFrontiera).
+estraiStato([node(S,_)|Frontier], [S|StatiFrontiera]) :-
+  estraiStato(Frontier, StatiFrontiera).
 
-% generateSons(Nodo, ListaAzioniApplicabili, ListaStatiVisitati, Frontiera,ListaNodiFigli)
+% generateSons(Node, AllowedActionsList, ExpandedNodes, Frontier,ChildNodesList)
 generateSons(_, [], _, []).
-generateSons(nodo(S,ListaAzioniPerS), [Azione|AltreAzioni], ListaStatiVisitati, [nodo(SNuovo, [Azione|ListaAzioniPerS])|AltriFigli]) :-
-  trasforma(Azione, S, SNuovo),
-  \+member(SNuovo, ListaStatiVisitati),
-  generateSons(nodo(S, ListaAzioniPerS), AltreAzioni, ListaStatiVisitati, AltriFigli).
-generateSons(Nodo, [_|AltreAzioni], ListaStatiVisitati, ListaNodiFigli) :-
-  generateSons(Nodo, AltreAzioni, ListaStatiVisitati, ListaNodiFigli).
+generateSons(node(S,ActionsListForS), [Action|OtherActions], ExpandedNodes, [node(NewS, [Action|ActionsListForS])|OtherChildren]) :-
+  move(Action, S, NewS),
+  \+member(NewS, ExpandedNodes),
+  generateSons(node(S, ActionsListForS), OtherActions, ExpandedNodes, OtherChildren).
+generateSons(Node, [_|OtherActions], ExpandedNodes, ChildNodesList) :-
+  generateSons(Node, OtherActions, ExpandedNodes, ChildNodesList).

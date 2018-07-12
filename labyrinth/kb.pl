@@ -3,7 +3,7 @@
 
 num_col(10).
 num_righe(10).
-iniziale(pos(4,2)).
+initialPosition(pos(4,2)).
 finale(pos(7,9)).
 
 occupata(pos(2,5)).

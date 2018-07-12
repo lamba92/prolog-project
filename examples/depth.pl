@@ -1,28 +1,28 @@
-:- dynamic trasforma/3, applicabile/2, finale/1, iniziale/1.
+:- dynamic move/3, allowed/2, finale/1, initialPosition/1.
 
 ricercaProfondita(Sol) :-
-  iniziale(S),
+  initialPosition(S),
   ric_prof(S, Sol, [S]),
   write(Sol).
 
 ricercaProfLim(N, Sol) :-
-  iniziale(S),
+  initialPosition(S),
   ric_prof_lim(S, Sol, [S], N),
   write("\n"),
   write(Sol).
 
 ric_prof(S, _, _) :- finale(S), !.
-ric_prof(S, [Azione|ListaAzioni], Visitati) :-
-  applicabile(Azione, S),
-  trasforma(Azione, S, SNuovo),
-  \+member(SNuovo, Visitati),
-  ric_prof(SNuovo, ListaAzioni, [SNuovo|Visitati]).
+ric_prof(S, [Action|ListaAzioni], Visitati) :-
+  allowed(Action, S),
+  move(Action, S, NewS),
+  \+member(NewS, Visitati),
+  ric_prof(NewS, ListaAzioni, [NewS|Visitati]).
 
 ric_prof_lim(S, [], _, _) :- finale(S).
-ric_prof_lim(S, [Azione|ListaAzioni], Visitati, N) :-
+ric_prof_lim(S, [Action|ListaAzioni], Visitati, N) :-
   N>0,
-  applicabile(Azione, S),
-  trasforma(Azione, S, SNuovo),
-  \+member(SNuovo, Visitati),
+  allowed(Action, S),
+  move(Action, S, NewS),
+  \+member(NewS, Visitati),
   N1 is N-1,
-  ric_prof_lim(SNuovo, ListaAzioni, [SNuovo|Visitati], N1).
+  ric_prof_lim(NewS, ListaAzioni, [NewS|Visitati], N1).

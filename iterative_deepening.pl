@@ -6,7 +6,7 @@ start:-
 
 ricercaID(Sol) :-
   maxDepth(D),
-  iniziale(S),
+  initialPosition(S),
   length(_, L),
   L =< D,
   write("Depth is "), write(L), write("\n"),
@@ -15,10 +15,10 @@ ricercaID(Sol) :-
   write(Sol).
 
 ric_prof_lim(S, [], _, _) :- finale(S).
-ric_prof_lim(S, [Azione|ListaAzioni], Visitati, N) :-
+ric_prof_lim(S, [Action|ListaAzioni], Visitati, N) :-
   N>0,
-  applicabile(Azione, S),
-  trasforma(Azione, S, SNuovo),
-  \+member(SNuovo, Visitati),
+  allowed(Action, S),
+  move(Action, S, NewS),
+  \+member(NewS, Visitati),
   N1 is N-1,
-  ric_prof_lim(SNuovo, ListaAzioni, [SNuovo|Visitati], N1).
+  ric_prof_lim(NewS, ListaAzioni, [NewS|Visitati], N1).

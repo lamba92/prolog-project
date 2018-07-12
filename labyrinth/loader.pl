@@ -1,1 +1,1 @@
-:- ['azioni.pl', 'baseDati.pl', 'euristica.pl'].
+:- ['kb.pl', 'actions.pl', 'heuristic.pl'].

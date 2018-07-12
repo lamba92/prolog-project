@@ -1,47 +1,47 @@
 :- dynamic n_factorial/2, setElement/4, dim/1.
 
-applicabile(nord, Stato) :-
+allowed(nord, Stato) :-
   dim(D),
   nth0(P_, Stato, v),
   P is P_ + 1,
   P>D.
 
-applicabile(sud, Stato) :-
+allowed(sud, Stato) :-
   dim(D),
   nth0(P_, Stato, v),
   P is P_ + 1,
   P < (D * D) - D.
 
-applicabile(ovest, Stato) :-
+allowed(ovest, Stato) :-
   dim(D),
   nth0(P, Stato, v),
   M is mod(P + 1, D),
   M =\= 1.
 
-applicabile(est, Stato) :-
+allowed(est, Stato) :-
   dim(D),
   nth0(P, Stato, v),
   M is mod(P + 1, D),
   M =\= D.
 
-trasforma(est, S, SNuovo) :-
+move(est, S, NewS) :-
   nth0(OldP, S, v),
   NewP is OldP + 1,
-  swap(S, OldP, NewP, SNuovo).
-trasforma(ovest, S, SNuovo) :-
+  swap(S, OldP, NewP, NewS).
+move(ovest, S, NewS) :-
   nth0(OldP, S, v),
   NewP is OldP - 1,
-  swap(S, OldP, NewP, SNuovo).
-trasforma(nord, S, SNuovo) :-
+  swap(S, OldP, NewP, NewS).
+move(nord, S, NewS) :-
   dim(D),
   nth0(OldP, S, v),
   NewP is OldP - D,
-  swap(S, OldP, NewP, SNuovo).
-trasforma(sud, S, SNuovo) :-
+  swap(S, OldP, NewP, NewS).
+move(sud, S, NewS) :-
   dim(D),
   nth0(OldP, S, v),
   NewP is OldP + D,
-  swap(S, OldP, NewP, SNuovo).
+  swap(S, OldP, NewP, NewS).
 
 maxDepth(Md) :-
   dim(D),
@@ -49,7 +49,7 @@ maxDepth(Md) :-
   %n_factorial(D, F),
   %Md is F / 2.
 
-costoPasso(_, _, Costo) :-
+cost(_, _, Costo) :-
   Costo is 1.
 
 % swap(Lista,Pos1,Pos2,NuovaLista)

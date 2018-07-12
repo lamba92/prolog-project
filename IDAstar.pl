@@ -1,4 +1,4 @@
-% stato rappresentato da nodo(S, ListaAzioniPerS, costoCamminoAttuale, costoEuristica, depth)
+% stato rappresentato da node(S, ActionsListForS, costoCamminoAttuale, costoEuristica, depth)
 
 :- ['./tile_game/loader.pl', 'utils.pl'].
 
@@ -6,58 +6,57 @@ start:-
   idaStar(S),
   write(S).
   
-idaStar(Soluzione) :-
-  iniziale(S),
-  euristica(S, _, E),
+idaStar(Solution) :-
+  initialPosition(S),
+  heuristic(S, _, E),
   maxDepth(D),
   length(_, L),
   L =< D,
   write("\n_____________________________________"),
   write("\n| IDA* CON PROFONDITA' MASSIMA "), write(L),
   write("\n|____________________________________\n"),
-  ida([nodo(S, [], 0, E, 0)], [], L, Soluzione),
+  ida([node(S, [], 0, E, 0)], [], L, Solution),
   write("\nSoluzione trovata!\n"),
-  write(Soluzione), write(" | "), write(L).
+  write(Solution), write(" | "), write(L).
 
-% star(CodaNodiDaEsplorare, NodiEspansi, MaxDepth, Soluzione)
+% star(CodaNodiDaEsplorare, ExpandedNodes, MaxDepth, Solution)
 %          input               input       input     output
-ida([nodo(S, ListaAzioniPerS, _, _, _)|_], _, _, ListaAzioniPerS) :-
+ida([node(S, ActionsListForS, _, _, _)|_], _, _, ActionsListForS) :-
   finale(S).
-ida([nodo(S, ListaAzioniPerS, CostoCamminoAttuale, CostoEuristica, ProfonditaS)|Frontiera], NodiEspansi, MaxDepth, Soluzione) :-
+ida([node(S, ActionsListForS, ActualPathCost, HeuristicCost, DepthOfS)|Frontier], ExpandedNodes, MaxDepth, Solution) :-
   write("\nNodo in analisi: "), write(S),
-  write("\nLista azioni: "), write(ListaAzioniPerS),
-  write("\nCosto: "), write(CostoCamminoAttuale), write(" | Euristica: "), write(CostoEuristica), write(" | Profondita': "), write(ProfonditaS),
-  findall(Az, applicabile(Az, S), ListaAzioniApplicabili),
-  write("\nAzioni applicabili: "), write(ListaAzioniApplicabili),
-  generateSons(nodo(S,ListaAzioniPerS, CostoCamminoAttuale, CostoEuristica, ProfonditaS), ListaAzioniApplicabili, NodiEspansi, MaxDepth, ListaFigliS),
-% write("\nFigli trovati: "), write(ListaFigliS), write("\n"),
-  appendOrdinata(ListaFigliS, Frontiera, NuovaFrontiera),
+  write("\nLista azioni: "), write(ActionsListForS),
+  write("\nCosto: "), write(ActualPathCost), write(" | Euristica: "), write(HeuristicCost), write(" | Profondita': "), write(DepthOfS),
+  findall(Az, allowed(Az, S), AllowedActionsList),
+  write("\nAzioni applicabili: "), write(AllowedActionsList),
+  generateSons(node(S,ActionsListForS, ActualPathCost, HeuristicCost, DepthOfS), AllowedActionsList, ExpandedNodes, MaxDepth, SChilderenList),
+  appendOrdinata(SChilderenList, Frontier, NewFrontier),
   write("\n\n___________________________"),
   write("\n|FRONTIERA ATTUALE:\n|"),
-  stampaFrontieraConP(NuovaFrontiera),
+  stampaFrontieraConP(NewFrontier),
   write("\n|___________________________"),
-  ida(NuovaFrontiera, [S|NodiEspansi], MaxDepth, Soluzione).
+  ida(NewFrontier, [S|ExpandedNodes], MaxDepth, Solution).
 
-% generateSons(Nodo, ListaAzioniApplicabili, ListaStatiVisitati, MaxDepth, ListaNodiFigli)
+% generateSons(Node, AllowedActionsList, ExpandedNodes, MaxDepth, ChildNodesList)
 generateSons(_, [], _, _, []).
-generateSons(nodo(S, ListaAzioniPerS, CostoCamminoS, CostoEuristicaS, ProfonditaS),
-             [Azione|AltreAzioni],
-             NodiEspansi,
+generateSons(node(S, ActionsListForS, PathCostForS, HeuristicOfS, DepthOfS),
+             [Action|OtherActions],
+             ExpandedNodes,
              MaxDepth,
-             [nodo(SNuovo, ListaAzioniPerSNuovo, CostoCamminoSNuovo, CostoEuristicaSNuovo, ProfonditaSNuovo)|AltriFigli]) :-
-  ProfonditaSNuovo is ProfonditaS + 1,
-  ProfonditaSNuovo =< MaxDepth,
-  trasforma(Azione, S, SNuovo),
-  \+member(SNuovo, NodiEspansi),
-  costoPasso(S, SNuovo, CostoPasso),
-  CostoCamminoSNuovo is CostoCamminoS + CostoPasso,
-  write("\nCalcolo euristica per "), write(Azione),
-  euristica(SNuovo, SolE, CostoEuristicaSNuovo),
-  write("\n"), write(SolE), write(" | "), write(CostoEuristicaSNuovo),
-  append(ListaAzioniPerS, [Azione], ListaAzioniPerSNuovo),
-  generateSons(nodo(S, ListaAzioniPerS, CostoCamminoS, CostoEuristicaS, ProfonditaS), AltreAzioni, NodiEspansi, MaxDepth, AltriFigli),
+             [node(NewS, ActionsListForNewS, PathCostForNewS, HeuristicCostForNewS, NewSDepth)|OtherChildren]) :-
+  NewSDepth is DepthOfS + 1,
+  NewSDepth =< MaxDepth,
+  move(Action, S, NewS),
+  \+member(NewS, ExpandedNodes),
+  cost(S, NewS, Cost),
+  PathCostForNewS is PathCostForS + Cost,
+  write("\nCalcolo heuristic per "), write(Action),
+  heuristic(NewS, HSol, HeuristicCostForNewS),
+  write("\n"), write(HSol), write(" | "), write(HeuristicCostForNewS),
+  append(ActionsListForS, [Action], ActionsListForNewS),
+  generateSons(node(S, ActionsListForS, PathCostForS, HeuristicOfS, DepthOfS), OtherActions, ExpandedNodes, MaxDepth, OtherChildren),
   !.
-% serve per backtrackare sulle altre azione se l'Azione porta ad uno stato già visitato o che fallisce
-generateSons(Nodo, [_|AltreAzioni], ListaStatiVisitati, MaxDepth, ListaNodiFigli) :-
-  generateSons(Nodo, AltreAzioni, ListaStatiVisitati, MaxDepth, ListaNodiFigli),
+% serve per backtrackare sulle altre azione se l'Action porta ad uno stato già visitato o che fallisce
+generateSons(Node, [_|OtherActions], ExpandedNodes, MaxDepth, ChildNodesList) :-
+  generateSons(Node, OtherActions, ExpandedNodes, MaxDepth, ChildNodesList),
   !.
