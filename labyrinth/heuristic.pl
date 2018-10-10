@@ -12,13 +12,10 @@ hallowed(ovest, pos(_,C)) :-
 hallowed(est, pos(_,C)) :-
   \+col_num(C).
 
-heuristic(NodoIniziale, Sol, L) :-
-  maxDepth(D),
-  length(_, L),
-  L =< D,
-  limitedDeapthSearch(NodoIniziale, Sol, [NodoIniziale], L),
-  !.
-
+heuristic(pos(X1, Y1), [], L) :-
+  finalPosition(pos(X2, Y2)),
+  L is abs(X1-X2) + abs(Y1-Y2).
+  
 limitedDeapthSearch(S, [], _, _) :- finalPosition(S).
 limitedDeapthSearch(S, [Action|ListaAzioni], Visitati, L) :-
   L>0,
