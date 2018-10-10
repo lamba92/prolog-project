@@ -1,12 +1,12 @@
 % stato rappresentato da node(S, ActionsListForS, costoCamminoAttuale, costoEuristica, depth)
 
-:- ['./tile_game/loader.pl', 'utils.pl'].
+:- ['./labyrinth/loader.pl', 'utils.pl'].
 
 start:- 
-  idaStar(S),
+  lambaStar(S),
   write(S).
   
-idaStar(Solution) :-
+lambaStar(Solution) :-
   initialPosition(S),
   heuristic(S, _, E),
   maxDepth(D),

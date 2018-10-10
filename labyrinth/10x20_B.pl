@@ -1,10 +1,10 @@
+% Esempio 10 x 20
 
-% Esempio 20 x 10
-
-col_num(20).
 row_num(10).
+col_num(20).
+
 initialPosition(pos(1,1)).
-finalPosition(pos(20,10)).
+finalPosition(pos(10,20)).
 
 occupied(pos(1,2)).
 occupied(pos(1,4)).
@@ -50,6 +50,7 @@ occupied(pos(7,16)).
 
 occupied(pos(8,6)).
 occupied(pos(8,8)).
+occupied(pos(8,11)).
 occupied(pos(8,12)).
 occupied(pos(8,15)).
 
