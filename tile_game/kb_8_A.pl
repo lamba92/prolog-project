@@ -1,4 +1,4 @@
-% Esempio gioco dell'otto'
+% Esempio gioco dell'8
 
 %    _______
 %    |2|4|3|

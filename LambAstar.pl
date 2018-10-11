@@ -1,6 +1,6 @@
 % stato rappresentato da node(S, ActionsListForS, costoCamminoAttuale, costoEuristica, depth)
 
-:- ['./labyrinth/loader.pl', 'utils.pl'].
+:- ['./tile_game/loader.pl', 'utils.pl'].
 
 start:- 
   lambaStar(S),
@@ -34,6 +34,8 @@ ida([node(S, ActionsListForS, ActualPathCost, HeuristicCost, DepthOfS)|Frontier]
   write("\n\n___________________________"),
   write("\n|FRONTIERA ATTUALE:\n|"),
   stampaFrontieraConP(NewFrontier),
+  length(ExpandedNodes, EN),
+  write("\n|Nodi Espansi: "), write(EN),
   write("\n|___________________________"),
   ida(NewFrontier, [S|ExpandedNodes], MaxDepth, Solution).
 

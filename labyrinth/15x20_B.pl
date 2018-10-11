@@ -1,4 +1,4 @@
-% Esempio 20 x 15
+% Esempio 15 x 20
 
 row_num(15).
 col_num(20).
@@ -61,6 +61,7 @@ occupied(pos(9,20)).
 occupied(pos(10,1)).
 occupied(pos(10,5)).
 occupied(pos(10,7)).
+occupied(pos(10,8)).
 occupied(pos(10,10)).
 occupied(pos(10,18)).
 
@@ -70,11 +71,16 @@ occupied(pos(11,6)).
 occupied(pos(11,7)).
 occupied(pos(11,8)).
 occupied(pos(11,14)).
+occupied(pos(11,15)).
+occupied(pos(11,16)).
 occupied(pos(11,17)).
 
 occupied(pos(12,5)).
 occupied(pos(12,6)).
 occupied(pos(12,9)).
+occupied(pos(12,12)).
+occupied(pos(12,13)).
+occupied(pos(12,14)).
 occupied(pos(12,20)).
 
 occupied(pos(13,1)).

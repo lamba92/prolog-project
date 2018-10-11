@@ -1,6 +1,6 @@
 % stato rappresentato da node(S, ActionsListForS, costoCamminoAttuale, costoEuristica)
 
-:- ['./labyrinth/loader.pl', 'utils.pl'].
+:- ['./tile_game/loader.pl', 'utils.pl'].
 
 aStar(Solution) :-
   initialPosition(S),
@@ -24,6 +24,8 @@ star([node(S, ActionsListForS, ActualPathCost, HeuristicCost)|Frontier], Expande
   write("\n\n___________________________"),
   write("\n|FRONTIERA ATTUALE:\n|"),
   stampaFrontiera(NewFrontier),
+  length(ExpandedNodes, EN),
+  write("\n|\n| NODI ESPANSI: "), write(EN),
   write("\n|___________________________"),
   star(NewFrontier, [S|ExpandedNodes], Solution).
 

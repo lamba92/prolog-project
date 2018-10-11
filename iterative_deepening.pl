@@ -1,4 +1,4 @@
-:- ['./labyrinth/loader.pl', 'utils.pl'].
+:- ['./tile_game/loader.pl', 'utils.pl'].
 
 start:-
   ricercaID(S),
@@ -14,7 +14,11 @@ ricercaID(Sol) :-
   write("\n"),
   write(Sol).
 
-ric_prof_lim(S, [], _, _) :- finalPosition(S).
+ric_prof_lim(S, [], ExpandedNodes, _) :- 
+  finalPosition(S),
+  length(ExpandedNodes, EN),
+  write(EN).
+
 ric_prof_lim(S, [Action|ListaAzioni], Visitati, N) :-
   N>0,
   allowed(Action, S),
