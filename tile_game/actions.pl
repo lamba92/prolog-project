@@ -10,7 +10,7 @@ allowed(sud, Stato) :-
   dim(D),
   nth0(P_, Stato, v),
   P is P_ + 1,
-  P < (D * D) - D.
+  P =< (D * D) - D.
 
 allowed(ovest, Stato) :-
   dim(D),
@@ -22,7 +22,8 @@ allowed(est, Stato) :-
   dim(D),
   nth0(P, Stato, v),
   M is mod(P + 1, D),
-  M =\= D.
+  M =\= 0.
+  
 
 move(est, S, NewS) :-
   nth0(OldP, S, v),

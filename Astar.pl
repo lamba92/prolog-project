@@ -2,6 +2,10 @@
 
 :- ['./tile_game/loader.pl', 'utils.pl'].
 
+start:-
+  aStar(S),
+  write(S).
+
 aStar(Solution) :-
   initialPosition(S),
   heuristic(S, _, L),

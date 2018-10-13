@@ -35,7 +35,7 @@ appendOrdinata([_|OtherChildren], Frontier, NewFrontier) :-
 % Serve ad evitare di inserire lo stesso nodo nella frontiera. Se il
 % nodo fornito è presente in frontiera e migliore per cammino minimo,
 % viene cancellato il nodo già presente nella frontiera, se il nodo
-% non è presente in frontiera torna true, se il nodo è prensete in
+% non è presente in frontiera torna true, se il nodo è presente in
 % frontiera con costo minore di quello attualmente fornito torna
 % false
 checkDuplicate(_, [], []).
