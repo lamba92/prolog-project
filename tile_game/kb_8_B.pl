@@ -1,13 +1,12 @@
 % Esempio gioco dell'8
 
 %    _______
-%    |7|4|3|
-%    |2|1|8|
-%    | |5|6|
+%    |4|1|3|
+%    |7|2|5|
+%    | |8|6|
 %
 
-initialPosition([7,4,3,2,1,8,v,5,6]).
-%initialPosition([1,2,3,4,5,v,7,8,6]).
+initialPosition([4,1,3,7,2,5,v,8,6]).
 finalPosition([1,2,3,4,5,6,7,8,v]).
 
 dim(3).

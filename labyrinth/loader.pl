@@ -1,1 +1,1 @@
-:- ['5x5_A.pl', 'actions.pl', 'heuristic.pl'].
+:- ['20x20_A.pl', 'actions.pl', 'heuristic.pl'].

@@ -12,32 +12,32 @@ lambaStar(Solution) :-
   maxDepth(D),
   length(_, L),
   L =< D,
-  write("\n_____________________________________"),
-  write("\n| IDA* CON PROFONDITA' MASSIMA "), write(L),
-  write("\n|____________________________________\n"),
-  ida([node(S, [], 0, E, 0)], [], L, Solution),
+  %write("\n_____________________________________"),
+  %write("\n| IDA* CON PROFONDITA' MASSIMA "), write(L),
+  %write("\n|____________________________________\n"),
+  lamba([node(S, [], 0, E, 0)], [], L, Solution),
   write("\nSoluzione trovata!\n"),
   write(Solution), write(" | "), write(L).
 
 % star(CodaNodiDaEsplorare, ExpandedNodes, MaxDepth, Solution)
 %          input               input       input     output
-ida([node(S, ActionsListForS, _, _, _)|_], _, _, ActionsListForS) :-
+lamba([node(S, ActionsListForS, _, _, _)|_], _, _, ActionsListForS) :-
   finalPosition(S).
-ida([node(S, ActionsListForS, ActualPathCost, HeuristicCost, DepthOfS)|Frontier], ExpandedNodes, MaxDepth, Solution) :-
-  write("\nNodo in analisi: "), write(S),
-  write("\nLista azioni: "), write(ActionsListForS),
-  write("\nCosto: "), write(ActualPathCost), write(" | Euristica: "), write(HeuristicCost), write(" | Profondita': "), write(DepthOfS),
+lamba([node(S, ActionsListForS, ActualPathCost, HeuristicCost, DepthOfS)|Frontier], ExpandedNodes, MaxDepth, Solution) :-
+  %write("\nNodo in analisi: "), write(S),
+  %write("\nLista azioni: "), write(ActionsListForS),
+  %write("\nCosto: "), write(ActualPathCost), write(" | Euristica: "), write(HeuristicCost), write(" | Profondita': "), write(DepthOfS),
   findall(Az, allowed(Az, S), AllowedActionsList),
-  write("\nAzioni applicabili: "), write(AllowedActionsList),
+  %write("\nAzioni applicabili: "), write(AllowedActionsList),
   generateSons(node(S,ActionsListForS, ActualPathCost, HeuristicCost, DepthOfS), AllowedActionsList, ExpandedNodes, MaxDepth, SChilderenList),
   appendOrdinata(SChilderenList, Frontier, NewFrontier),
-  write("\n\n___________________________"),
-  write("\n|FRONTIERA ATTUALE:\n|"),
-  stampaFrontieraConP(NewFrontier),
-  length(ExpandedNodes, EN),
-  write("\n|Nodi Espansi: "), write(EN),
-  write("\n|___________________________"),
-  ida(NewFrontier, [S|ExpandedNodes], MaxDepth, Solution).
+  %write("\n\n___________________________"),
+  %write("\n|FRONTIERA ATTUALE:\n|"),
+  %stampaFrontieraConP(NewFrontier),
+  %length(ExpandedNodes, EN),
+  %write("\n|Nodi Espansi: "), write(EN),
+  %write("\n|___________________________"),
+  lamba(NewFrontier, [S|ExpandedNodes], MaxDepth, Solution).
 
 % generateSons(Node, AllowedActionsList, ExpandedNodes, MaxDepth, ChildNodesList)
 generateSons(_, [], _, _, []).
@@ -52,9 +52,9 @@ generateSons(node(S, ActionsListForS, PathCostForS, HeuristicOfS, DepthOfS),
   \+member(NewS, ExpandedNodes),
   cost(S, NewS, Cost),
   PathCostForNewS is PathCostForS + Cost,
-  write("\nCalcolo heuristic per "), write(Action),
+  %write("\nCalcolo heuristic per "), write(Action),
   heuristic(NewS, HSol, HeuristicCostForNewS),
-  write("\n"), write(HSol), write(" | "), write(HeuristicCostForNewS),
+  %write("\n"), write(HSol), write(" | "), write(HeuristicCostForNewS),
   append(ActionsListForS, [Action], ActionsListForNewS),
   generateSons(node(S, ActionsListForS, PathCostForS, HeuristicOfS, DepthOfS), OtherActions, ExpandedNodes, MaxDepth, OtherChildren),
   !.
