@@ -10,7 +10,6 @@ ricorri(Stato, [_|T], Pos, In, Out) :-
   Pos2 is Pos + 1,
   In2 is In + Dis,
   ricorri(Stato, T, Pos2, In2, Out).
-% Out non viene utilizzato
 
 distanzaTile(Stato, Pos, Dis) :-
   dim(D),
@@ -20,8 +19,7 @@ distanzaTile(Stato, Pos, Dis) :-
   X is mod(abs(D*D - (Pos + 1)), D),
   Dis is X + Y,
   !.
-% Non penso sia corretta come euristica,
-% scazza in parecchi casi.
+
 distanzaTile(Stato, Pos, Dis) :-
   dim(D),
   nth0(Pos, Stato, Elem),

@@ -1,10 +1,10 @@
-:- dynamic n_factorial/2, setElement/4, dim/1.
+:- dynamic setElement/4, dim/1.
 
 allowed(nord, Stato) :-
   dim(D),
   nth0(P_, Stato, v),
   P is P_ + 1,
-  P>D.
+  P > D.
 
 allowed(sud, Stato) :-
   dim(D),
@@ -47,8 +47,6 @@ move(sud, S, NewS) :-
 maxDepth(Md) :-
   dim(D),
   Md is D*100.
-  %n_factorial(D, F),
-  %Md is F / 2.
 
 cost(_, _, Costo) :-
   Costo is 1.
