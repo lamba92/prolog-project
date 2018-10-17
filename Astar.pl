@@ -1,6 +1,6 @@
 % stato rappresentato da node(S, ActionsListForS, costoCamminoAttuale, costoEuristica)
 
-:- ['./tile_game/loader.pl', 'utils.pl'].
+:- ['./labyrinth/loader.pl', 'utils.pl'].
 
 start:-
   aStar(S),
@@ -18,13 +18,11 @@ star([node(S, ActionsListForS, _, _)|_], _, ActionsListForS) :-
 star([node(S, ActionsListForS, ActualPathCost, HeuristicCost)|Frontier], ExpandedNodes, Solution) :-
   findall(Az, allowed(Az, S), AllowedActionsList),
   generateSons(node(S,ActionsListForS, ActualPathCost, HeuristicCost), AllowedActionsList, ExpandedNodes, SChilderenList),
+  length(ExpandedNodes, EN),
+  write("|\n Nodi Espansi: "), write(EN), write("\n"),
   append(SChilderenList, Frontier, NewFrontier),
   predsort(comparator, NewFrontier, OrderedResult),
   star(OrderedResult, [S|ExpandedNodes], Solution).
-
-comparator(R, node(_,_,_, C1),node(_,_,_,C2)) :-
-  C1>C2 -> R = > ; R = < .
-
 
 % generateSons(Node, AllowedActionsList, ExpandedNodes, ChildNodesList)
 generateSons(_, [], _, []).
