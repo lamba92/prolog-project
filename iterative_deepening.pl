@@ -1,28 +1,25 @@
 :- ['./tile_game/loader.pl', 'utils.pl'].
 
 start:-
-  ricercaID(S),
+  id(S),
   write(S).
 
-ricercaID(Sol) :-
+id(Sol):-
   maxDepth(D),
   initialPosition(S),
   length(_, L),
   L =< D,
   write("Depth is "), write(L), write("\n"),
-  ric_prof_lim(S, Sol, [S], L),
+  id_search(S, Sol, [S], L),
   write("\n"),
   write(Sol).
 
-ric_prof_lim(S, [], ExpandedNodes, _) :- 
-  finalPosition(S),
-  length(ExpandedNodes, EN),
-  write(EN).
-
-ric_prof_lim(S, [Action|ListaAzioni], Visitati, N) :-
+id_search(S, [], _, _):- 
+  finalPosition(S).
+id_search(S, [Action|OtherActions], VisitedNodes, N):-
   N>0,
   allowed(Action, S),
   move(Action, S, NewS),
-  \+member(NewS, Visitati),
+  \+member(NewS, VisitedNodes),
   N1 is N-1,
-  ric_prof_lim(NewS, ListaAzioni, [NewS|Visitati], N1).
+  id_search(NewS, OtherActions, [NewS|VisitedNodes], N1).

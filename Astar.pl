@@ -3,26 +3,26 @@
 :- ['./labyrinth/loader.pl', 'utils.pl'].
 
 start:-
-  aStar(S),
+  astar(S),
   write(S).
 
-aStar(Solution) :-
+astar(Solution) :-
   initialPosition(S),
   heuristic(S, _, L),
-  star([node(S, [], 0, L)], [], Solution),
+  astar_search([node(S, [], 0, L)], [], Solution),
   write(Solution).
 
 % star(CodaNodiDaEsplorare, ExpandedNodes, Solution)
-star([node(S, ActionsListForS, _, _)|_], _, ActionsListForS) :-
+astar_search([node(S, ActionsListForS, _, _)|_], _, ActionsListForS) :-
   finalPosition(S).
-star([node(S, ActionsListForS, ActualPathCost, HeuristicCost)|Frontier], ExpandedNodes, Solution) :-
+astar_search([node(S, ActionsListForS, ActualPathCost, HeuristicCost)|Frontier], ExpandedNodes, Solution) :-
   findall(Az, allowed(Az, S), AllowedActionsList),
   generateSons(node(S,ActionsListForS, ActualPathCost, HeuristicCost), AllowedActionsList, ExpandedNodes, SChilderenList),
   length(ExpandedNodes, EN),
   write("|\n Nodi Espansi: "), write(EN), write("\n"),
   append(SChilderenList, Frontier, NewFrontier),
   predsort(comparator, NewFrontier, OrderedResult),
-  star(OrderedResult, [S|ExpandedNodes], Solution).
+  astar_search(OrderedResult, [S|ExpandedNodes], Solution).
 
 % generateSons(Node, AllowedActionsList, ExpandedNodes, ChildNodesList)
 generateSons(_, [], _, []).
@@ -34,7 +34,7 @@ generateSons(node(S, ActionsListForS, PathCostForS, HeuristicOfS),
   \+member(NewS, ExpandedNodes),
   cost(S, NewS, Cost),
   PathCostForNewS is PathCostForS + Cost,
-  heuristic(NewS, HSol, HeuristicCostForNewS),
+  heuristic(NewS, _, HeuristicCostForNewS),
   append(ActionsListForS, [Action], ActionsListForNewS),
   generateSons(node(S, ActionsListForS, PathCostForS, HeuristicOfS), OtherActions, ExpandedNodes, OtherChildren),
   !.
