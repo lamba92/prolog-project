@@ -1,6 +1,6 @@
 % stato rappresentato da node(S, ActionsListForS, costoCamminoAttuale, costoEuristica)
 
-:- ['./labyrinth/loader.pl', 'utils.pl'].
+:- ['./tile_game/loader.pl', 'utils.pl'].
 
 start:-
   aStar(S),
@@ -16,22 +16,15 @@ aStar(Solution) :-
 star([node(S, ActionsListForS, _, _)|_], _, ActionsListForS) :-
   finalPosition(S).
 star([node(S, ActionsListForS, ActualPathCost, HeuristicCost)|Frontier], ExpandedNodes, Solution) :-
-  %write("\nNodo in analisi: "), write(S),
-  %write("\nLista azioni: "), write(ActionsListForS),
-  %write("\nCosto: "), write(ActualPathCost), write(" | Euristica: "), write(HeuristicCost),
   findall(Az, allowed(Az, S), AllowedActionsList),
-  %write("\nAzioni applicabili: "), write(AllowedActionsList),
   generateSons(node(S,ActionsListForS, ActualPathCost, HeuristicCost), AllowedActionsList, ExpandedNodes, SChilderenList),
-% write("\nFigli trovati: "), write(SChilderenList), write("\n"),
-  appendOrdinata(SChilderenList, Frontier, NewFrontier),
-  star(NewFrontier, [S|ExpandedNodes], Solution).
-  %write("\n\n___________________________"),
-  %write("\n|FRONTIERA ATTUALE:\n|"),
-  %stampaFrontiera(NewFrontier),
-  %length(ExpandedNodes, EN),
-  %write("\n|\n| NODI ESPANSI: "), write(EN),
-  %write("\n|___________________________"),
-  
+  append(SChilderenList, Frontier, NewFrontier),
+  predsort(comparator, NewFrontier, OrderedResult),
+  star(OrderedResult, [S|ExpandedNodes], Solution).
+
+comparator(R, node(_,_,_, C1),node(_,_,_,C2)) :-
+  C1>C2 -> R = > ; R = < .
+
 
 % generateSons(Node, AllowedActionsList, ExpandedNodes, ChildNodesList)
 generateSons(_, [], _, []).
@@ -43,9 +36,7 @@ generateSons(node(S, ActionsListForS, PathCostForS, HeuristicOfS),
   \+member(NewS, ExpandedNodes),
   cost(S, NewS, Cost),
   PathCostForNewS is PathCostForS + Cost,
-  %write("\nCalcolo heuristic per "), write(Action),
   heuristic(NewS, HSol, HeuristicCostForNewS),
-  %write("\n"), write(HSol), write(" | "), write(HeuristicCostForNewS),
   append(ActionsListForS, [Action], ActionsListForNewS),
   generateSons(node(S, ActionsListForS, PathCostForS, HeuristicOfS), OtherActions, ExpandedNodes, OtherChildren),
   !.
