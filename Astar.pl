@@ -21,7 +21,7 @@ astar_search([node(S, ActionsListForS, ActualPathCost, HeuristicCost)|Frontier],
   length(ExpandedNodes, EN),
   write("|\n Nodi Espansi: "), write(EN), write("\n"),
   append(SChilderenList, Frontier, NewFrontier),
-  predsort(comparator, NewFrontier, OrderedResult),
+  predsort(comparator_a_star, NewFrontier, OrderedResult),
   astar_search(OrderedResult, [S|ExpandedNodes], Solution).
 
 % generateSons(Node, AllowedActionsList, ExpandedNodes, ChildNodesList)

@@ -1,4 +1,4 @@
-:- ['./tile_game/loader.pl', 'utils.pl'].
+:- ['./labyrinth/loader.pl', 'utils.pl'].
 
 start:-
   id(S),

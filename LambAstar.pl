@@ -26,7 +26,7 @@ lamba([node(S, ActionsListForS, ActualPathCost, HeuristicCost, DepthOfS)|Frontie
   length(ExpandedNodes, EN),
   write("|\n Nodi Espansi: "), write(EN), write("\n"),
   append(SChilderenList, Frontier, NewFrontier),
-  predsort(comparator, NewFrontier, OrderedResult),
+  predsort(comparator_a_star, NewFrontier, OrderedResult),
   lamba(OrderedResult, [S|ExpandedNodes], MaxDepth, Solution).
 
 % generateSons(Node, AllowedActionsList, ExpandedNodes, MaxDepth, ChildNodesList)
