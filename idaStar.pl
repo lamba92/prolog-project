@@ -1,6 +1,12 @@
-:- ['./labyrinth/loader.pl', 'utils.pl'].
+:- ['./tile_game/loader.pl', 'utils.pl'].
 :- use_module(library(apply)).
 
+% ###################################################
+% IDA* algorithm.
+% Node is represent by ida_node/2 predicate and its structure is:
+%   • NewS
+%   • FNewS
+% ###################################################
 start:-
   ida(S),
   write(S).
@@ -19,12 +25,14 @@ idastar(S, Sol, VisitedNodes, PathCostS, Threshold):-
     nth0(0, SortedTList, NewThreshold),
     retractall(ida_node(_, _)),
     idastar(S, Sol, VisitedNodes, 0, NewThreshold).
-    
+
+% ###################################################
+% ###################################################
 ida_search(S, [], _, _, _):-
     finalPosition(S).
 ida_search(S, [Action|OtherActions], VisitedNodes, PathCostS, Threshold):-
     allowed(Action, S),
-    move(Action, S, NewS),
+    move(Action, S, NewS), 
     \+member(NewS, VisitedNodes),
     cost(S, NewS, Cost),
     PathCostNewS is PathCostS + Cost,

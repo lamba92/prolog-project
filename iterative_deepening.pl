@@ -1,5 +1,8 @@
-:- ['./labyrinth/loader.pl', 'utils.pl'].
+:- ['./tile_game/loader.pl', 'utils.pl'].
 
+% ###################################################
+% Iterative Deepening algorithm.
+% ###################################################
 start:-
   id(S),
   write(S).
@@ -14,6 +17,8 @@ id(Sol):-
   write("\n"),
   write(Sol).
 
+% ###################################################
+% ###################################################
 id_search(S, [], _, _):- 
   finalPosition(S).
 id_search(S, [Action|OtherActions], VisitedNodes, N):-

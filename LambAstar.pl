@@ -1,11 +1,17 @@
-% stato rappresentato da node(S, ActionsListForS, costoCamminoAttuale, costoEuristica, depth)
+:- ['./labyrinth/loader.pl', 'utils.pl'].
 
-:- ['./tile_game/loader.pl', 'utils.pl'].
-
+% ###################################################
+% LambA* algorithm.
+% Node is represent by node/4 predicate and its structure is:
+%   • S
+%   • ActionsListForS
+%   • ActualPathCost
+%   • HeuristicCost
+% ###################################################
 start:- 
   lambaStar(S),
   write(S).
-  
+
 lambaStar(Solution) :-
   initialPosition(S),
   heuristic(S, _, E),
@@ -16,6 +22,9 @@ lambaStar(Solution) :-
   write("\nSoluzione trovata!\n"),
   write(Solution), write(" | "), write(L).
 
+
+% ###################################################
+% ###################################################
 % star(CodaNodiDaEsplorare, ExpandedNodes, MaxDepth, Solution)
 %          input               input       input     output
 lamba([node(S, ActionsListForS, _, _, _)|_], _, _, ActionsListForS) :-
@@ -29,6 +38,8 @@ lamba([node(S, ActionsListForS, ActualPathCost, HeuristicCost, DepthOfS)|Frontie
   predsort(comparator_a_star, NewFrontier, OrderedResult),
   lamba(OrderedResult, [S|ExpandedNodes], MaxDepth, Solution).
 
+% ###################################################
+% ###################################################
 % generateSons(Node, AllowedActionsList, ExpandedNodes, MaxDepth, ChildNodesList)
 generateSons(_, [], _, _, []).
 generateSons(node(S, ActionsListForS, PathCostForS, HeuristicOfS, DepthOfS),
