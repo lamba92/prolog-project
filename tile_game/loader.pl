@@ -1,1 +1,1 @@
-:- ['kb_15_D.pl', 'actions.pl', 'heuristic.pl'].
+:- ['kb_8_A.pl', 'actions.pl', 'heuristic.pl'].

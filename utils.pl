@@ -26,4 +26,3 @@ setElement([Head|Tail],Pos,X,[Head|NuovaTail]):-
 
 comparator_a_star(R, node(_, _, _, C1),node(_, _, _, C2)) :-
   C1>=C2 -> R = > ; R = < .
-

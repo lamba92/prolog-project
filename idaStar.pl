@@ -1,29 +1,28 @@
 :- ['./labyrinth/loader.pl', 'utils.pl'].
+:- use_module(library(apply)).
 
 start:-
-  idastar(S),
+  ida(S),
   write(S).
 
-idastar(S):-
+ida(S):-
     initialPosition(S),
-    heuristic(S, _, Bound),
-    ida_search(S, Sol, [S], 0, Bound),
-    write("\n"),
-    write(Sol).
+    heuristic(S, _, InitialThreshold),
+    idastar(S, Sol, [S], 0, InitialThreshold),
+    write("\n"), write(Sol).
 
-ida_search(S, Sol, VisitedNodes, PathCostS, Bound):-
-    ida_search_1(S, Sol, VisitedNodes, PathCostS, Bound);
-    findall(FNewS, ida_node(_, FNewS), BoundsList),
-    % usa sort/4, verifica con SWIPROLOG
-    sort(oundsList, OrderedBoundsList),
-    nth0(0, OrderedBoundsList, NewBound),
-    write(NewBound),
-    retract(ida_node(_, _)),
-    ida_search(S, Sol, VisitedNodes, 0, NewBound).
+idastar(S, Sol, VisitedNodes, PathCostS, Threshold):-
+    ida_search(S, Sol, VisitedNodes, PathCostS, Threshold);
+    findall(FS, ida_node(_, FS), ThresholdList),
+    exclude(>=(Threshold), ThresholdList, OverThresholdList),
+    sort(OverThresholdList, SortedTList),
+    nth0(0, SortedTList, NewThreshold),
+    retractall(ida_node(_, _)),
+    idastar(S, Sol, VisitedNodes, 0, NewThreshold).
     
-ida_search_1(S, [], _, _, _):-
+ida_search(S, [], _, _, _):-
     finalPosition(S).
-ida_search_1(S, [Action|OtherActions], VisitedNodes, PathCostS, Bound):-
+ida_search(S, [Action|OtherActions], VisitedNodes, PathCostS, Threshold):-
     allowed(Action, S),
     move(Action, S, NewS),
     \+member(NewS, VisitedNodes),
@@ -32,5 +31,5 @@ ida_search_1(S, [Action|OtherActions], VisitedNodes, PathCostS, Bound):-
     heuristic(NewS, _, HeuristicCostForNewS),
     FNewS is PathCostNewS + HeuristicCostForNewS,
     assert(ida_node(NewS, FNewS)),
-	FNewS =< Bound,
-    ida_search(NewS, OtherActions, [NewS|VisitedNodes], FNewS, Bound).
+	FNewS =< Threshold,
+    ida_search(NewS, OtherActions, [NewS|VisitedNodes], PathCostNewS, Threshold).
