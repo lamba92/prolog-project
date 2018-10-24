@@ -18,6 +18,7 @@ id(Sol):-
   write(Sol).
 
 % ###################################################
+% id_search/4 predicate provides the ID search.
 % ###################################################
 id_search(S, [], _, _):- 
   finalPosition(S).

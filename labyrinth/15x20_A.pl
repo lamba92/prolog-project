@@ -1,4 +1,4 @@
-% Esempio 20 x 15
+% 15x20 labyrinth
 
 row_num(15).
 col_num(20).

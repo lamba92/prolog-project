@@ -8,4 +8,4 @@
 %   • :- ['kb_8_C.pl', 'actions.pl', 'heuristic.pl'].
 %   • :- ['kb_15_A.pl', 'actions.pl', 'heuristic.pl'].
 %###################################################
-:- ['kb_15_D.pl', 'actions.pl', 'heuristic.pl'].
+:- ['kb_15_B.pl', 'actions.pl', 'heuristic.pl'].

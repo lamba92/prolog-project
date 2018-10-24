@@ -5,9 +5,10 @@
 % It returns the sum of the distance of each tile 
 % from its proper position.
 %
-% • heuristic/3
-% • calculate/4
-% • tileDistance/3
+% • heuristic/3, wrapper predicates that returns the heuristic cost for each
+%   configuration of the 8-tile puzzle.
+% • calculate/4, provides the heuristic cost for each tile of the 8-tile puzzle.
+% • tileDistance/3.
 %#################################################
 heuristic(State, Sol, H) :-
   calculate(State, State, 0, H),

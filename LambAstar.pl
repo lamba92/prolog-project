@@ -1,18 +1,20 @@
 :- ['./labyrinth/loader.pl', 'utils.pl'].
 
-% ###################################################
+% #####################################################################
 % LambA* algorithm.
 % Node is represent by node/4 predicate and its structure is:
-%   • S
-%   • ActionsListForS
-%   • ActualPathCost
-%   • HeuristicCost
-% ###################################################
+%   • S, current configuration's state
+%   • ActionsListForS, list of action to reach S state
+%   • ActualPathCost, cost of path to reach S state from initial state
+%   • HeuristicCost, cost of heuristic for S state configuration.
+%
+% At the moment (probably forever) this won't work.
+% #####################################################################
 start:- 
-  lambaStar(S),
+  lambastar(S),
   write(S).
 
-lambaStar(Solution) :-
+lambastar(Solution) :-
   initialPosition(S),
   heuristic(S, _, E),
   maxDepth(D),
@@ -22,11 +24,10 @@ lambaStar(Solution) :-
   write("\nSoluzione trovata!\n"),
   write(Solution), write(" | "), write(L).
 
-
-% ###################################################
-% ###################################################
-% star(CodaNodiDaEsplorare, ExpandedNodes, MaxDepth, Solution)
+% #####################################################################
+% lamba(NodesToBeExplored, ExpandedNodes, MaxDepth, Solution)
 %          input               input       input     output
+% #####################################################################
 lamba([node(S, ActionsListForS, _, _, _)|_], _, _, ActionsListForS) :-
   finalPosition(S).
 lamba([node(S, ActionsListForS, ActualPathCost, HeuristicCost, DepthOfS)|Frontier], ExpandedNodes, MaxDepth, Solution) :-
@@ -35,12 +36,12 @@ lamba([node(S, ActionsListForS, ActualPathCost, HeuristicCost, DepthOfS)|Frontie
   length(ExpandedNodes, EN),
   write("|\n Nodi Espansi: "), write(EN), write("\n"),
   append(SChilderenList, Frontier, NewFrontier),
-  predsort(comparator_a_star, NewFrontier, OrderedResult),
+  predsort(a_star_comparator, NewFrontier, OrderedResult),
   lamba(OrderedResult, [S|ExpandedNodes], MaxDepth, Solution).
 
-% ###################################################
-% ###################################################
+% #####################################################################
 % generateSons(Node, AllowedActionsList, ExpandedNodes, MaxDepth, ChildNodesList)
+% #####################################################################
 generateSons(_, [], _, _, []).
 generateSons(node(S, ActionsListForS, PathCostForS, HeuristicOfS, DepthOfS),
              [Action|OtherActions],
@@ -57,7 +58,9 @@ generateSons(node(S, ActionsListForS, PathCostForS, HeuristicOfS, DepthOfS),
   append(ActionsListForS, [Action], ActionsListForNewS),
   generateSons(node(S, ActionsListForS, PathCostForS, HeuristicOfS, DepthOfS), OtherActions, ExpandedNodes, MaxDepth, OtherChildren),
   !.
-% serve per backtrackare sulle altre azione se l'Action porta ad uno stato già visitato o che fallisce
+% #####################################################################
+% Used to backtrack on any other possible action in case of fail.
+% #####################################################################
 generateSons(Node, [_|OtherActions], ExpandedNodes, MaxDepth, ChildNodesList) :-
   generateSons(Node, OtherActions, ExpandedNodes, MaxDepth, ChildNodesList),
   !.

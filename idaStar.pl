@@ -4,8 +4,8 @@
 % ###################################################
 % IDA* algorithm.
 % Node is represent by ida_node/2 predicate and its structure is:
-%   • NewS
-%   • FNewS
+%   • NewS, that represent the node configuration,
+%   • FNewS, that represent the F-value for the specific node.
 % ###################################################
 start:-
   ida(S),
@@ -27,6 +27,7 @@ idastar(S, Sol, VisitedNodes, PathCostS, Threshold):-
     idastar(S, Sol, VisitedNodes, 0, NewThreshold).
 
 % ###################################################
+% ida_search/5 predicate provides the IDA* search.
 % ###################################################
 ida_search(S, [], _, _, _):-
     finalPosition(S).

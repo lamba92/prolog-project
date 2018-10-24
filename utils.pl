@@ -6,7 +6,7 @@ printFrontier([]).
 printFrontier([node(S, ActionsListForS, ActualPathCost, HeuristicCost)|Frontier]) :-
   H is ActualPathCost + HeuristicCost,
   write("\n|Node: "), write(S), write(" | F: "), write(H),
-  write("\n| - Actions performed to reach state: "), write(ActionsListForS),
+  write("\n| - Actions performed to reach current state: "), write(ActionsListForS),
   write("\n| - Actual path cost "), write(ActualPathCost),
   write("\n| - Heuristic cost: "), write(HeuristicCost),
   write("\n|"),
@@ -20,7 +20,7 @@ printFrontierWithBound([]).
 printFrontierWithBound([node(S, ActionsListForS, ActualPathCost, HeuristicCost, DepthOfS)|Frontier]) :-
   H is ActualPathCost + HeuristicCost,
   write("\n|Node: "), write(S), write(" | F: "), write(H),
-  write("\n| - Actions performed to reach stat: "), write(ActionsListForS),
+  write("\n| - Actions performed to reach current state: "), write(ActionsListForS),
   write("\n| - Actual path cost "), write(ActualPathCost),
   write("\n| - Heuristic cost: "), write(HeuristicCost),
   write("\n| - Depth': "), write(DepthOfS),
@@ -28,18 +28,18 @@ printFrontierWithBound([node(S, ActionsListForS, ActualPathCost, HeuristicCost, 
   printFrontierWithBound(Frontier).
 
 % #################################################
-% setElement/1 predicate is used to ...
+% setElement/1 predicate is self explanatory.
 % #################################################
-setElement([_|Tail],0,X,[X|Tail]):-!.
-setElement([Head|Tail],Pos,X,[Head|NuovaTail]):-
+setElement([_|Tail], 0, X, [X|Tail]):-!.
+setElement([Head|Tail], Pos, X, [Head|NuovaTail]):-
   Pos1 is Pos-1,
-  setElement(Tail,Pos1,X,NuovaTail).
+  setElement(Tail, Pos1, X, NuovaTail).
 
 % #################################################
-% comparator_a_star/3 predicate provides a comparator
+% a_star_comparator/3 predicate provides a comparator
 % used to sort A* frontier after each new expansion.
 % #################################################
-comparator_a_star(R, node(_, _, P1, C1), node(_, _, P2, C2)) :-
-  F1 is P1 + C1,
-  F2 is P2 + C2,
-  F1>=F2 -> R = > ; R = < .
+a_star_comparator(R, node(_, _, G_Cost_1, H_Cost_1), node(_, _, G_Cost_2, H_Cost_2)) :-
+  F1 is G_Cost_1 + H_Cost_1,
+  F2 is G_Cost_2 + H_Cost_2,
+  F1 >= F2 -> R = > ; R = < .
