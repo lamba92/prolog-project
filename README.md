@@ -76,6 +76,17 @@ The heuristic used here is the sum of the Manhattan distances of every tile from
   - `idastar/5`: the predicates starts the search through the predicate `ida_search/5` and allows to calculate a new threshold in case it returns false.
   - `ida_search/5`: the predicates that implements the IDA* search.
 
+## Statistics
+
+All the statistics have been reported in the `prolog-statistics.pdf` file. Here you can see two meaningful examples:
+
+<p align="center">
+  <img src="https://github.com/lamba92/prolog-project/blob/master/stuff/15_D.PNG"/>
+ </p>
+<p align="center">
+  <img src="https://github.com/lamba92/prolog-project/blob/master/stuff/Lab%205x5.PNG"/>
+</p>
+
 ## Authors
 
 - **Cesare Iurlaro** - [CesareIurlaro](https://github.com/CesareIurlaro)
